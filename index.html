@@ -6,6 +6,8 @@
 
 <title>MoonFlix KDrama</title>
 
+<link rel="icon" type="image/png" href="moonflix-logo.png">
+
 <style>
 body {
     margin: 0;
@@ -60,6 +62,11 @@ header {
     padding: 10px 15px;
     border-radius: 20px;
     white-space: nowrap;
+    cursor: pointer;
+}
+
+.nav button:hover {
+    background: #6b3294;
 }
 
 h2 {
@@ -93,6 +100,10 @@ h2 {
     border-radius: 10px;
 }
 
+.card h3 {
+    font-size: 15px;
+}
+
 .contact {
     text-align: center;
     padding: 25px;
@@ -116,12 +127,11 @@ h2 {
 }
 
 footer {
-    text-align: center
+    text-align: center;
     padding: 25px;
     color: #777;
 }
 </style>
-    <link rel="icon" type="image/png" href="moonflix-logo.png">l
 </head>
 
 <body>
@@ -138,36 +148,41 @@ footer {
 
 <div class="search">
 
-    <input type="text"
-           placeholder="Search dramas...">
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Search dramas..."
+        oninput="searchDrama()">
 
 </div>
 
 <div class="nav">
 
-    <button>Home</button>
-    <button>K-Drama</button>
-    <button>C-Drama</button>
-    <button>J-Drama</button>
-    <button>Thai Drama</button>
-    <button>Hindi Dubbed</button>
+    <button onclick="showCategory('all')">Home</button>
+    <button onclick="showCategory('kdrama')">K-Drama</button>
+    <button onclick="showCategory('cdrama')">C-Drama</button>
+    <button onclick="showCategory('jdrama')">J-Drama</button>
+    <button onclick="showCategory('thai')">Thai Drama</button>
+    <button onclick="showCategory('hindi')">Hindi Dubbed</button>
 
 </div>
 
 <h2>Popular Dramas</h2>
 
-<div class="grid">
+<div class="grid" id="dramaGrid">
 
-    <!-- Filing For Love -->
+    <!-- Falling For Love -->
 
-    <div class="card">
+    <div class="card"
+         data-category="cdrama"
+         data-name="falling for love">
 
         <a href="filing-for-love.html">
 
             <img src="poster.jpeg"
-                 alt="Filing For Love">
+                 alt="Falling For Love">
 
-            <h3>Filing For Love</h3>
+            <h3>Falling For Love</h3>
 
         </a>
 
@@ -176,7 +191,9 @@ footer {
 
     <!-- The East Palace -->
 
-    <div class="card">
+    <div class="card"
+         data-category="cdrama"
+         data-name="the east palace">
 
         <a href="the-east-palace.html">
 
@@ -192,7 +209,9 @@ footer {
 
     <!-- A Love Other Than Yours -->
 
-    <div class="card">
+    <div class="card"
+         data-category="cdrama"
+         data-name="a love other than yours">
 
         <a href="A-love-other-than-yours.html">
 
@@ -208,7 +227,9 @@ footer {
 
     <!-- Perfect Crown -->
 
-    <div class="card">
+    <div class="card"
+         data-category="kdrama"
+         data-name="perfect crown">
 
         <a href="Perfect-crown.html">
 
@@ -224,7 +245,9 @@ footer {
 
     <!-- Dear X -->
 
-    <div class="card">
+    <div class="card"
+         data-category="kdrama"
+         data-name="dear x">
 
         <a href="Dear-X.html">
 
@@ -240,7 +263,9 @@ footer {
 
     <!-- The Ordinary Jackpot -->
 
-    <div class="card">
+    <div class="card"
+         data-category="kdrama"
+         data-name="the ordinary jackpot">
 
         <a href="The-ordinary-jackpot.html">
 
@@ -288,6 +313,64 @@ footer {
     © 2026 MoonFlix KDrama
 
 </footer>
+
+
+<script>
+
+let selectedCategory = "all";
+
+function showCategory(category) {
+
+    selectedCategory = category;
+
+    filterDramas();
+
+}
+
+function searchDrama() {
+
+    filterDramas();
+
+}
+
+function filterDramas() {
+
+    let searchText =
+        document.getElementById("searchInput").value.toLowerCase();
+
+    let cards =
+        document.querySelectorAll(".card");
+
+    cards.forEach(function(card) {
+
+        let name =
+            card.getAttribute("data-name").toLowerCase();
+
+        let category =
+            card.getAttribute("data-category").toLowerCase();
+
+        let matchesSearch =
+            name.includes(searchText);
+
+        let matchesCategory =
+            selectedCategory === "all" ||
+            category === selectedCategory;
+
+        if (matchesSearch && matchesCategory) {
+
+            card.style.display = "block";
+
+        } else {
+
+            card.style.display = "none";
+
+        }
+
+    });
+
+}
+
+</script>
 
 </body>
 </html>
