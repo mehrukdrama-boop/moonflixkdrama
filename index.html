@@ -5,31 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>MoonFlix KDrama</title>
-    <meta name="description" content="MoonFlix KDrama - Watch and explore Korean dramas, Chinese dramas, Japanese dramas and Hindi dubbed dramas.">
 
-<meta name="keywords" content="MoonFlix KDrama, Korean Drama, Chinese Drama, Hindi Dubbed Drama">
-
-<meta name="author" content="MoonFlix KDrama">
-
-<meta property="og:title" content="MoonFlix KDrama">
-
-<meta property="og:description" content="Your World of Dramas - Korean, Chinese, Japanese and Hindi Dubbed Dramas.">
-
-<meta property="og:type" content="website">
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "MoonFlix KDrama",
-  "alternateName": "MoonFlix",
-  "url": "https://moonflixkdrama.mehrkhan902.workers.dev/"
-}
-</script>
+<meta name="description" content="MoonFlix KDrama - Korean, Chinese, Japanese, Thai dramas and Hindi dubbed anime.">
 
 <link rel="icon" type="image/png" href="moonflix-logo.png">
 
 <style>
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
     background: #0b0712;
@@ -83,17 +68,71 @@ header {
     padding: 10px 15px;
     border-radius: 20px;
     white-space: nowrap;
-    cursor: pointer;
-}
-
-.nav button:hover {
-    background: #6b3294;
 }
 
 h2 {
     padding: 0 15px;
     color: #d9a7ff;
 }
+
+/* OLDER DRAMAS SLIDER */
+
+.slider-section {
+    padding: 10px 15px 20px;
+}
+
+.slider {
+    position: relative;
+    max-width: 420px;
+    margin: auto;
+    background: #171020;
+    border-radius: 15px;
+    padding: 12px;
+    text-align: center;
+}
+
+.slider img {
+    width: 100%;
+    height: 430px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.slider h3 {
+    margin: 12px 0 5px;
+}
+
+.slider p {
+    color: #aaa;
+    font-size: 13px;
+}
+
+.arrow {
+    position: absolute;
+    top: 45%;
+    transform: translateY(-50%);
+    width: 38px;
+    height: 48px;
+    border: none;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.75);
+    color: white;
+    font-size: 28px;
+}
+
+.arrow.left {
+    left: 20px;
+}
+
+.arrow.right {
+    right: 20px;
+}
+
+.dots {
+    color: #d9a7ff;
+}
+
+/* DRAMA BOXES */
 
 .grid {
     display: grid;
@@ -125,13 +164,13 @@ h2 {
     font-size: 15px;
 }
 
+.card small {
+    color: #aaa;
+}
+
 .contact {
     text-align: center;
     padding: 25px;
-}
-
-.contact h2 {
-    padding: 0;
 }
 
 .contact a {
@@ -143,8 +182,6 @@ h2 {
 
 .social-icon {
     font-size: 24px;
-    vertical-align: middle;
-    margin-right: 5px;
 }
 
 footer {
@@ -158,238 +195,357 @@ footer {
 <body>
 
 <header>
-
-    <img class="logo"
-         src="moonflix-logo.png"
-         alt="MoonFlix KDrama">
-
+    <img class="logo" src="moonflix-logo.png" alt="MoonFlix KDrama">
     <div class="tagline">Your World of Dramas</div>
-
 </header>
 
 <div class="search">
-
     <input
         type="text"
         id="searchInput"
         placeholder="Search dramas..."
         oninput="searchDrama()">
-
 </div>
 
 <div class="nav">
-
     <button onclick="showCategory('all')">Home</button>
     <button onclick="showCategory('kdrama')">K-Drama</button>
     <button onclick="showCategory('cdrama')">C-Drama</button>
     <button onclick="showCategory('jdrama')">J-Drama</button>
     <button onclick="showCategory('thai')">Thai Drama</button>
+    <button onclick="showCategory('anime')">Anime</button>
     <button onclick="showCategory('hindi')">Hindi Dubbed</button>
+</div>
+
+<!-- OLDER DRAMAS: ONLY 4 -->
+
+<section class="slider-section" id="olderSection">
+
+<h2>Older MX Player Dramas</h2>
+
+<div class="slider">
+
+<button class="arrow left" onclick="previousOlder()">‹</button>
+
+<a id="olderLink" href="#">
+<img id="olderImage" src="" alt="Drama">
+<h3 id="olderTitle">Drama</h3>
+</a>
+
+<p id="olderInfo"></p>
+
+<button class="arrow right" onclick="nextOlder()">›</button>
+
+<div class="dots" id="olderDots"></div>
 
 </div>
 
-<h2>Popular Dramas</h2>
+</section>
 
-<div class="grid" id="dramaGrid">
+<!-- NEW DRAMAS: ONLY 4 -->
 
-    <!-- Falling For Love -->
+<h2>New Dramas</h2>
 
-    <div class="card"
-         data-category="cdrama"
-         data-name="falling for love">
+<div class="grid" id="newGrid"></div>
 
-        <a href="filing-for-love.html">
+<!-- CATEGORIES -->
 
-            <img src="poster.jpeg"
-                 alt="Falling For Love">
+<h2 id="categoryTitle">All Dramas</h2>
 
-            <h3>Falling For Love</h3>
-
-        </a>
-
-    </div>
-
-
-    <!-- The East Palace -->
-
-    <div class="card"
-         data-category="cdrama"
-         data-name="the east palace">
-
-        <a href="the-east-palace.html">
-
-            <img src="the-east-palace.jpeg"
-                 alt="The East Palace">
-
-            <h3>The East Palace</h3>
-
-        </a>
-
-    </div>
-
-
-    <!-- A Love Other Than Yours -->
-
-    <div class="card"
-         data-category="cdrama"
-         data-name="a love other than yours">
-
-        <a href="A-love-other-than-yours.html">
-
-            <img src="a-love-other-than-yours.jpeg"
-                 alt="A Love Other Than Yours">
-
-            <h3>A Love Other Than Yours</h3>
-
-        </a>
-
-    </div>
-
-
-    <!-- Perfect Crown -->
-
-    <div class="card"
-         data-category="kdrama"
-         data-name="perfect crown">
-
-        <a href="Perfect-crown.html">
-
-            <img src="Perfect-Crown.jpeg"
-                 alt="Perfect Crown">
-
-            <h3>Perfect Crown</h3>
-
-        </a>
-
-    </div>
-
-
-    <!-- Dear X -->
-
-    <div class="card"
-         data-category="kdrama"
-         data-name="dear x">
-
-        <a href="Dear-X.html">
-
-            <img src="Dear-X.jpeg"
-                 alt="Dear X">
-
-            <h3>Dear X</h3>
-
-        </a>
-
-    </div>
-
-
-    <!-- The Ordinary Jackpot -->
-
-    <div class="card"
-         data-category="kdrama"
-         data-name="the ordinary jackpot">
-
-        <a href="The-ordinary-jackpot.html">
-
-            <img src="the-ordinary-jackpot.jpeg"
-                 alt="The Ordinary Jackpot">
-
-            <h3>The Ordinary Jackpot</h3>
-
-        </a>
-
-    </div>
-
-</div>
-
-
-<!-- Contact Section -->
+<div class="grid" id="categoryGrid"></div>
 
 <div class="contact">
 
-    <h2>Contact Me 🌙</h2>
+<h2>Contact Me 🌙</h2>
 
-    <a href="https://www.instagram.com/its_me_mehrjan/"
-       target="_blank">
+<a href="https://www.instagram.com/its_me_mehrjan/" target="_blank">
+📸 Instagram
+</a>
 
-        <span class="social-icon">📸</span>
-        Instagram
+<br><br>
 
-    </a>
-
-    <br><br>
-
-    <a href="https://t.me/Mehrukdrama"
-       target="_blank">
-
-        <span class="social-icon">📱</span>
-        Telegram
-
-    </a>
+<a href="https://t.me/Mehrukdrama" target="_blank">
+📱 Telegram
+</a>
 
 </div>
 
-
 <footer>
-
-    © 2026 MoonFlix KDrama
-
+© 2026 MoonFlix KDrama
 </footer>
-
 
 <script>
 
+/* TOP 4 OLDER DRAMAS */
+
+const olderDramas = [
+
+/*
+{
+title: "Drama Name",
+image: "drama.jpeg",
+page: "drama.html",
+category: "cdrama",
+country: "China"
+}
+*/
+
+];
+
+
+/* LATEST 4 NEW DRAMAS */
+
+const newDramas = [
+
+/*
+{
+title: "Flower of Evil",
+image: "flower-of-evil.jpeg",
+page: "flower-of-evil.html",
+category: "kdrama",
+country: "Korea"
+}
+*/
+
+];
+
+
+/* ALL DRAMAS */
+
+const allDramas = [
+
+{
+title: "Falling For Love",
+image: "poster.jpeg",
+page: "filing-for-love.html",
+category: "cdrama",
+country: "China"
+},
+
+{
+title: "The East Palace",
+image: "the-east-palace.jpeg",
+page: "the-east-palace.html",
+category: "cdrama",
+country: "China"
+},
+
+{
+title: "A Love Other Than Yours",
+image: "a-love-other-than-yours.jpeg",
+page: "A-love-other-than-yours.html",
+category: "cdrama",
+country: "China"
+},
+
+{
+title: "Perfect Crown",
+image: "Perfect-Crown.jpeg",
+page: "Perfect-crown.html",
+category: "kdrama",
+country: "Korea"
+},
+
+{
+title: "Dear X",
+image: "Dear-X.jpeg",
+page: "Dear-X.html",
+category: "kdrama",
+country: "Korea"
+},
+
+{
+title: "The Ordinary Jackpot",
+image: "the-ordinary-jackpot.jpeg",
+page: "The-ordinary-jackpot.html",
+category: "kdrama",
+country: "Korea"
+}
+
+];
+
 let selectedCategory = "all";
+let olderIndex = 0;
+
+function getLatestFour(list) {
+    return list.slice(0, 4);
+}
+
+
+/* OLDER SLIDER */
+
+function renderOlderSlider() {
+
+    const list = getLatestFour(olderDramas);
+
+    if (list.length === 0) {
+        document.getElementById("olderSection").style.display = "none";
+        return;
+    }
+
+    document.getElementById("olderSection").style.display = "block";
+
+    if (olderIndex >= list.length) olderIndex = 0;
+
+    const drama = list[olderIndex];
+
+    document.getElementById("olderImage").src = drama.image;
+    document.getElementById("olderImage").alt = drama.title;
+    document.getElementById("olderTitle").textContent = drama.title;
+    document.getElementById("olderInfo").textContent =
+        drama.country + " • " + drama.category;
+
+    document.getElementById("olderLink").href = drama.page;
+
+    document.getElementById("olderDots").textContent =
+        (olderIndex + 1) + " / " + list.length;
+}
+
+function previousOlder() {
+
+    const list = getLatestFour(olderDramas);
+
+    if (list.length === 0) return;
+
+    olderIndex--;
+
+    if (olderIndex < 0) {
+        olderIndex = list.length - 1;
+    }
+
+    renderOlderSlider();
+}
+
+function nextOlder() {
+
+    const list = getLatestFour(olderDramas);
+
+    if (list.length === 0) return;
+
+    olderIndex++;
+
+    if (olderIndex >= list.length) {
+        olderIndex = 0;
+    }
+
+    renderOlderSlider();
+}
+
+
+/* CREATE DRAMA CARD */
+
+function createCard(drama) {
+
+    const card = document.createElement("div");
+
+    card.className = "card";
+
+    card.dataset.category = drama.category;
+    card.dataset.name = drama.title.toLowerCase();
+
+    card.innerHTML = `
+        <a href="${drama.page}">
+            <img src="${drama.image}" alt="${drama.title}">
+            <h3>${drama.title}</h3>
+            <small>${drama.country}</small>
+        </a>
+    `;
+
+    return card;
+}
+
+
+/* NEW DRAMAS */
+
+function renderNewDramas() {
+
+    const grid = document.getElementById("newGrid");
+
+    grid.innerHTML = "";
+
+    getLatestFour(newDramas).forEach(function(drama) {
+
+        grid.appendChild(createCard(drama));
+
+    });
+}
+
+
+/* CATEGORY DRAMAS */
+
+function renderCategories() {
+
+    const grid = document.getElementById("categoryGrid");
+
+    grid.innerHTML = "";
+
+    let list = allDramas;
+
+    if (selectedCategory !== "all") {
+
+        list = list.filter(function(drama) {
+
+            return drama.category === selectedCategory;
+
+        });
+
+    }
+
+    list.forEach(function(drama) {
+
+        grid.appendChild(createCard(drama));
+
+    });
+
+    document.getElementById("categoryTitle").textContent =
+        selectedCategory === "all"
+        ? "All Dramas"
+        : selectedCategory.toUpperCase() + " Dramas";
+}
+
+
+/* CATEGORY BUTTON */
 
 function showCategory(category) {
 
     selectedCategory = category;
 
-    filterDramas();
+    renderCategories();
+
+    searchDrama();
 
 }
+
+
+/* SEARCH */
 
 function searchDrama() {
 
-    filterDramas();
-
-}
-
-function filterDramas() {
-
-    let searchText =
+    const text =
         document.getElementById("searchInput").value.toLowerCase();
 
-    let cards =
-        document.querySelectorAll(".card");
+    const cards =
+        document.querySelectorAll("#categoryGrid .card");
 
     cards.forEach(function(card) {
 
-        let name =
-            card.getAttribute("data-name").toLowerCase();
+        const name = card.dataset.name;
 
-        let category =
-            card.getAttribute("data-category").toLowerCase();
-
-        let matchesSearch =
-            name.includes(searchText);
-
-        let matchesCategory =
-            selectedCategory === "all" ||
-            category === selectedCategory;
-
-        if (matchesSearch && matchesCategory) {
-
-            card.style.display = "block";
-
-        } else {
-
-            card.style.display = "none";
-
-        }
+        card.style.display =
+            name.includes(text) ? "block" : "none";
 
     });
 
 }
+
+
+/* START */
+
+renderOlderSlider();
+
+renderNewDramas();
+
+renderCategories();
 
 </script>
 
